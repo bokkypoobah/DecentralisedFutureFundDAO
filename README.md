@@ -26,13 +26,12 @@ be made into a community managed multisig.
 
 ## Aim
 
-A DAO to help people transitioning from their fucking shitty job into the Ethereum blockchain space.
 
 Some initial ideas:
 
 * Provide a loan (repayment not enforced, ever) for people who provide a Proof of Quitting and are serious about moving
-  into the Ethereum blockchain space
-* Provide funding for the education of people moving into the Ethereum blockchain space, focusing in Sydney and Australia initially
+  into the Ethereum Blockchain space
+* Provide funding for the education of people moving into the Ethereum Blockchain space, focusing in Sydney and Australia initially
 * Provide funding to build public utilities for the Ethereum ecosystem
 * Funding to initially be contributed by BokkyPooBah's clients (portion of fees)
 * Charitable contributions welcome
@@ -41,6 +40,21 @@ Some initial ideas:
 * A few trusted community members to help govern the DAO, with the aim for equal gender representation
 * Voting, governance and lots of things to be worked out
 
-Let's make it happen!
+Ready to make it happen?
+
+## DFF Application Process For Loans and Contributions
+
+Application form for candidates interested in receiving loan and contributions to support their projects, learning, community initiatives and other requests. Our aim is to support individuals, teams and groups that have genuine interest in promoting decentralization and intend to create positive impact on society
+
+# Disclaimer:
+* 1.1 Not a security nor investment advice
+DFF moneys provided is not a security and DFF provider and its sponsors does not provide any investment advice.  The funds are made available to support a community colony working on future decentralised projects. 
+* 1.2. DFF provider expressly disclaim any representation to participants to leave their jobs.
+* 1.3. DFF funds are each provided, used and accepted on an “AS IS” and are on an “AS AVAILABLE” basis without representations, warranties, promises or guarantees whatsoever of any kind by the DFF provider.  
+* 1.4. DFF participant shall rely on its own examination and investigation thereof. 
+
+Link to application
+<a href="https://goo.gl/forms/JPk9Nx9XTq76cKX32" target="_blank">Apply Now!</a>
+
 
 Enjoy. BokkyPooBah / Bok Consulting Pty Ltd - Dec 25 2017. The MIT Licence.
