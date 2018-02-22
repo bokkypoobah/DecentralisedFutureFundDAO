@@ -26,7 +26,7 @@ be made into a community managed multisig.
 
 ## Aim
 
-A DAO to help people transitioning from the day job into initiatives in the Ethereum Blockchain space with aim to promote decentralization.
+A DAO to help people who wish to transition from their day job into initiatives in the Ethereum Blockchain space with aim to promote decentralization.
 
 Some initial ideas:
 
