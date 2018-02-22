@@ -46,15 +46,14 @@ Ready to make it happen?
 
 Application form for candidates interested in receiving loan and contributions to support their projects, learning, community initiatives and other requests. Our aim is to support individuals, teams and groups that have genuine interest in promoting decentralization and intend to create positive impact on society
 
-# Disclaimer:
+### Disclaimer:
 * 1.1 Not a security nor investment advice
 DFF moneys provided is not a security and DFF provider and its sponsors does not provide any investment advice.  The funds are made available to support a community colony working on future decentralised projects. 
 * 1.2. DFF provider expressly disclaim any representation to participants to leave their jobs.
 * 1.3. DFF funds are each provided, used and accepted on an “AS IS” and are on an “AS AVAILABLE” basis without representations, warranties, promises or guarantees whatsoever of any kind by the DFF provider.  
 * 1.4. DFF participant shall rely on its own examination and investigation thereof. 
 
-Link to application
-<a href="https://goo.gl/forms/JPk9Nx9XTq76cKX32" target="_blank">Apply Now!</a>
+# Link to application -> <a href="https://goo.gl/forms/JPk9Nx9XTq76cKX32" target="_blank">Apply Now!</a>
 
 
 Enjoy. BokkyPooBah / Bok Consulting Pty Ltd - Dec 25 2017. The MIT Licence.
