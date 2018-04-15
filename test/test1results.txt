@@ -1,0 +1,113 @@
+ # Account                                             EtherBalanceChange                          Token Name
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.000000000000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433        0.000000000000000000           0.000000000000000000 Account #1 - Contract Owner
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Wallet
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Team Wallet
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4 - Airdrop Wallet
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+ 6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+ 7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+ 8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+ 9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10
+11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+                                                                                    0.000000000000000000 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+
+
+Deploy BTTS Library
+ # Account                                             EtherBalanceChange                          Token Name
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.003550569000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.003550569000000000           0.000000000000000000 Account #1 - Contract Owner
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Wallet
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Team Wallet
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4 - Airdrop Wallet
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+ 6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+ 7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+ 8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+ 9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10
+11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11
+12 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BTTS Library
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+                                                                                    0.000000000000000000 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+
+PASS Deploy BTTS Library
+tokenFactoryLibBTTSTx status=0x1 Success gas=6000000 gasUsed=3550569 costETH=0.003550569 costUSD=1.42530491367 @ ETH/USD=401.43 gasPrice=1 gwei block=2276 txIx=0 txId=0x8dc06d6d242b842588b5a2d0827e3eda6d6479f0200919b3a21f7dd6bf100d7f @ 1523751471 Sun, 15 Apr 2018 00:17:51 UTC
+tokenContractAddress=null
+
+Deploy BTTSTokenFactory
+ # Account                                             EtherBalanceChange                          Token Name
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.006627501000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.006627501000000000           0.000000000000000000 Account #1 - Contract Owner
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Wallet
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Team Wallet
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4 - Airdrop Wallet
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+ 6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+ 7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+ 8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+ 9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10
+11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11
+12 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BTTS Library
+13 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 BTTSTokenFactory
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+                                                                                    0.000000000000000000 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+
+PASS Deploy BTTSTokenFactory
+tokenFactoryTx status=0x1 Success gas=6000000 gasUsed=3076932 costETH=0.003076932 costUSD=1.23517281276 @ ETH/USD=401.43 gasPrice=1 gwei block=2278 txIx=0 txId=0xdea57f08f0479a0576f64779d15b1be48c4ed8895502d209ef2a15e65ee6dfae @ 1523751473 Sun, 15 Apr 2018 00:17:53 UTC
+tokenFactoryContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+tokenFactory.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+tokenFactory.newOwner=0x0000000000000000000000000000000000000000
+
+Deploy Token Contract
+tokenFactoryContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+get BTTSTokenListing 0 #2280 {"bttsTokenAddress":"0x5706018e0414e13cee6ec1852d4c6f637c65edad","decimals":"18","initialSupply":"2.5e+25","mintable":true,"name":"Doofus Dollar","ownerAddress":"0xa11aae29840fbb5c86e6fd4cf809eba183aef433","symbol":"DFF","transferable":true}
+bttsTokens=#1 ["0x5706018e0414e13cee6ec1852d4c6f637c65edad"]
+ # Account                                             EtherBalanceChange                          Token Name
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+ 0 0xa00af22d07c87d96eeeb0ed583f8f6ac7812827e        0.008546111000000000           0.000000000000000000 Account #0 - Miner
+ 1 0xa11aae29840fbb5c86e6fd4cf809eba183aef433       -0.008546111000000000    25000000.000000000000000000 Account #1 - Contract Owner
+ 2 0xa22ab8a9d641ce77e06d98b7d7065d324d3d6976        0.000000000000000000           0.000000000000000000 Account #2 - Wallet
+ 3 0xa33a6c312d9ad0e0f2e95541beed0cc081621fd0        0.000000000000000000           0.000000000000000000 Account #3 - Team Wallet
+ 4 0xa44a08d3f6933c69212114bb66e2df1813651844        0.000000000000000000           0.000000000000000000 Account #4 - Airdrop Wallet
+ 5 0xa55a151eb00fded1634d27d1127b4be4627079ea        0.000000000000000000           0.000000000000000000 Account #5
+ 6 0xa66a85ede0cbe03694aa9d9de0bb19c99ff55bd9        0.000000000000000000           0.000000000000000000 Account #6
+ 7 0xa77a2b9d4b1c010a22a7c565dc418cef683dbcec        0.000000000000000000           0.000000000000000000 Account #7
+ 8 0xa88a05d2b88283ce84c8325760b72a64591279a2        0.000000000000000000           0.000000000000000000 Account #8
+ 9 0xa99a0ae3354c06b1459fd441a32a3f71005d7da0        0.000000000000000000           0.000000000000000000 Account #9
+10 0xaaaa9de1e6c564446ebca0fd102d8bd92093c756        0.000000000000000000           0.000000000000000000 Account #10
+11 0xabba43e7594e3b76afb157989e93c6621497fd4b        0.000000000000000000           0.000000000000000000 Account #11
+12 0xe6ada9beed6e24be4c0259383db61b52bfca85f3        0.000000000000000000           0.000000000000000000 BTTS Library
+13 0xf4441f10804b35b13bad1e664e32237773276253        0.000000000000000000           0.000000000000000000 BTTSTokenFactory
+14 0x5706018e0414e13cee6ec1852d4c6f637c65edad        0.000000000000000000           0.000000000000000000 Token 'DFF' 'Doofus Dollar'
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+                                                                             25000000.000000000000000000 Total Token Balances
+-- ------------------------------------------ --------------------------- ------------------------------ ---------------------------
+
+deployTokenTx status=0x1 Success gas=4000000 gasUsed=1918610 costETH=0.00191861 costUSD=0.7701876123 @ ETH/USD=401.43 gasPrice=1 gwei block=2280 txIx=0 txId=0x0961344d7bae7cde100f1fa58c2454e6c9688a9698f709f2958da67076f2efbb @ 1523751475 Sun, 15 Apr 2018 00:17:55 UTC
+tokenFactoryContractAddress=0xf4441f10804b35b13bad1e664e32237773276253
+tokenFactory.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+tokenFactory.newOwner=0x0000000000000000000000000000000000000000
+BTTSTokenListing 0 #2280 {"bttsTokenAddress":"0x5706018e0414e13cee6ec1852d4c6f637c65edad","decimals":"18","initialSupply":"2.5e+25","mintable":true,"name":"Doofus Dollar","ownerAddress":"0xa11aae29840fbb5c86e6fd4cf809eba183aef433","symbol":"DFF","transferable":true}
+tokenContractAddress=0x5706018e0414e13cee6ec1852d4c6f637c65edad
+token.owner=0xa11aae29840fbb5c86e6fd4cf809eba183aef433
+token.newOwner=0x0000000000000000000000000000000000000000
+token.symbol=DFF
+token.name=Doofus Dollar
+token.decimals=18
+token.totalSupply=25000000
+token.transferable=true
+token.mintable=true
+token.minter=0x0000000000000000000000000000000000000000
+Mint 0 #2280 {"lockAccount":false,"tokenOwner":"0xa11aae29840fbb5c86e6fd4cf809eba183aef433","tokens":"2.5e+25"}
+Transfer 0 #2280: from=0x0000000000000000000000000000000000000000 to=0xa11aae29840fbb5c86e6fd4cf809eba183aef433 tokens=25000000
+
