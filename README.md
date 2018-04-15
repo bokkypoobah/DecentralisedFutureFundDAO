@@ -54,7 +54,7 @@ DFF moneys provided is not a security and DFF provider and its sponsors does not
 * 1.3. DFF funds are each provided, used and accepted on an “AS IS” and are on an “AS AVAILABLE” basis without representations, warranties, promises or guarantees whatsoever of any kind by the DFF provider.  
 * 1.4. DFF participant shall rely on its own examination and investigation thereof. 
 
-# Link to application -> <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTWPnY64-EiP2jiki8Mq8se2HgHNJ3tTzc5EPN_-IRoYZadg/viewform?usp=pp_url&entry.1506871634&entry.147453066&entry.1686966045&entry.424687122&entry.576859172&entry.84622599" target="_blank">Apply Now!</a>
+# Link to application -> <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTWPnY64-EiP2jiki8Mq8se2HgHNJ3tTzc5EPN_-IRoYZadg/viewform?usp=pp_url&entry.1506871634&entry.147453066&entry.1686966045&entry.424687122&entry.576859172&entry.84622599" target="_blank">On hold at the moment</a>
 
 
 Enjoy. BokkyPooBah / Bok Consulting Pty Ltd - Dec 25 2017. The MIT Licence.

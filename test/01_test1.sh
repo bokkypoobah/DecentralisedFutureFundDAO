@@ -85,6 +85,8 @@ var tokenFactoryLibBTTSBin = "0x" + tokenFactoryOutput.contracts["$TOKENFACTORYS
 var tokenFactoryAbi = JSON.parse(tokenFactoryOutput.contracts["$TOKENFACTORYSOL:BTTSTokenFactory"].abi);
 var tokenFactoryBin = "0x" + tokenFactoryOutput.contracts["$TOKENFACTORYSOL:BTTSTokenFactory"].bin;
 var tokenAbi = JSON.parse(tokenFactoryOutput.contracts["$TOKENFACTORYSOL:BTTSToken"].abi);
+var membersLibAbi = JSON.parse(daoOutput.contracts["$DAOSOL:Members"].abi);
+var membersLibBin = "0x" + daoOutput.contracts["$DAOSOL:Members"].bin;
 var daoAbi = JSON.parse(daoOutput.contracts["$DAOSOL:DFFDAO"].abi);
 var daoBin = "0x" + daoOutput.contracts["$DAOSOL:DFFDAO"].bin;
 
@@ -93,6 +95,8 @@ var daoBin = "0x" + daoOutput.contracts["$DAOSOL:DFFDAO"].bin;
 // console.log("DATA: tokenFactoryAbi=" + JSON.stringify(tokenFactoryAbi));
 // console.log("DATA: tokenFactoryBin=" + JSON.stringify(tokenFactoryBin));
 // console.log("DATA: tokenAbi=" + JSON.stringify(tokenAbi));
+// console.log("DATA: membersLibAbi=" + JSON.stringify(membersLibAbi));
+// console.log("DATA: membersLibBin=" + JSON.stringify(membersLibBin));
 // console.log("DATA: daoAbi=" + JSON.stringify(daoAbi));
 // console.log("DATA: daoBin=" + JSON.stringify(daoBin));
 
@@ -104,7 +108,7 @@ console.log("RESULT: ");
 // -----------------------------------------------------------------------------
 var deployLibBTTSMessage = "Deploy BTTS Library";
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + deployLibBTTSMessage);
+console.log("RESULT: ----- " + deployLibBTTSMessage + " -----");
 var tokenFactoryLibBTTSContract = web3.eth.contract(tokenFactoryLibBTTSAbi);
 // console.log(JSON.stringify(tokenFactoryLibBTTSContract));
 var tokenFactoryLibBTTSTx = null;
@@ -128,14 +132,14 @@ while (txpool.status.pending > 0) {
 printBalances();
 failIfTxStatusError(tokenFactoryLibBTTSTx, deployLibBTTSMessage);
 printTxData("tokenFactoryLibBTTSTx", tokenFactoryLibBTTSTx);
-printTokenContractDetails();
+// printTokenContractDetails();
 console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
 var deployTokenFactoryMessage = "Deploy BTTSTokenFactory";
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + deployTokenFactoryMessage);
+console.log("RESULT: ----- " + deployTokenFactoryMessage + " -----");
 // console.log("RESULT: tokenFactoryBin='" + tokenFactoryBin + "'");
 var newTokenFactoryBin = tokenFactoryBin.replace(/__BTTSTokenFactory\.sol\:BTTSLib__________/g, tokenFactoryLibBTTSAddress.substring(2, 42));
 // console.log("RESULT: newTokenFactoryBin='" + newTokenFactoryBin + "'");
@@ -172,12 +176,12 @@ var tokenMessage = "Deploy Token Contract";
 var symbol = "DFF";
 var name = "Doofus Dollar";
 var decimals = 18;
-var initialSupply = "25000000000000000000000000";
-// TEST var initialSupply = "0";
+// var initialSupply = "25000000000000000000000000";
+var initialSupply = "0";
 var mintable = true;
 var transferable = true;
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + tokenMessage);
+console.log("RESULT: ----- " + tokenMessage + " -----");
 var tokenContract = web3.eth.contract(tokenAbi);
 // console.log(JSON.stringify(tokenContract));
 var deployTokenTx = tokenFactory.deployBTTSTokenContract(symbol, name, decimals, initialSupply, mintable, transferable, {from: contractOwnerAccount, gas: 4000000, gasPrice: defaultGasPrice});
@@ -197,39 +201,24 @@ printTokenFactoryContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
 
-exit;
 
 // -----------------------------------------------------------------------------
-var transferToAirdropper_Message = "Transfer To Airdropper";
+var deployLibDAOMessage = "Deploy DAO Library";
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + transferToAirdropper_Message);
-var transferToAirdropper_1Tx = token.transfer(airdropWallet, initialSupply, {from: contractOwnerAccount, gas: 1000000, gasPrice: defaultGasPrice});
-while (txpool.status.pending > 0) {
-}
-printBalances();
-failIfTxStatusError(transferToAirdropper_1Tx, transferToAirdropper_Message + " - ac1 -> ac2 25m");
-printTxData("transferToAirdropper_1Tx", transferToAirdropper_1Tx);
-printTokenContractDetails();
-console.log("RESULT: ");
-
-
-// -----------------------------------------------------------------------------
-var crowdsaleMessage = "Deploy Crowdsale Contract";
-// -----------------------------------------------------------------------------
-console.log("RESULT: " + crowdsaleMessage);
-var crowdsaleContract = web3.eth.contract(crowdsaleAbi);
-var crowdsaleTx = null;
-var crowdsaleAddress = null;
-var crowdsale = crowdsaleContract.new({from: contractOwnerAccount, data: crowdsaleBin, gas: 6000000, gasPrice: defaultGasPrice},
+console.log("RESULT: ----- " + deployLibDAOMessage + " -----");
+var membersLibContract = web3.eth.contract(membersLibAbi);
+// console.log(JSON.stringify(membersLibContract));
+var membersLibTx = null;
+var membersLibAddress = null;
+var membersLibBTTS = membersLibContract.new({from: contractOwnerAccount, data: membersLibBin, gas: 6000000, gasPrice: defaultGasPrice},
   function(e, contract) {
     if (!e) {
       if (!contract.address) {
-        crowdsaleTx = contract.transactionHash;
+        membersLibTx = contract.transactionHash;
       } else {
-        crowdsaleAddress = contract.address;
-        addAccount(crowdsaleAddress, "Vizsafe Crowdsale");
-        addCrowdsaleContractAddressAndAbi(crowdsaleAddress, crowdsaleAbi);
-        console.log("DATA: crowdsaleAddress=" + crowdsaleAddress);
+        membersLibAddress = contract.address;
+        addAccount(membersLibAddress, "DAO Library - Members");
+        console.log("DATA: membersLibAddress=" + membersLibAddress);
       }
     }
   }
@@ -237,116 +226,121 @@ var crowdsale = crowdsaleContract.new({from: contractOwnerAccount, data: crowdsa
 while (txpool.status.pending > 0) {
 }
 printBalances();
-failIfTxStatusError(crowdsaleTx, crowdsaleMessage);
-printTxData("crowdsaleAddress=" + crowdsaleAddress, crowdsaleTx);
-printCrowdsaleContractDetails();
+failIfTxStatusError(membersLibTx, deployLibDAOMessage);
+printTxData("membersLibTx", membersLibTx);
 console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var setup_Message = "Setup";
+var deployDAOMessage = "Deploy DAO Contract";
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + setup_Message);
-var setup_1Tx = crowdsale.setBTTSToken(tokenAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
-var setup_2Tx = token.setMinter(crowdsaleAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
+console.log("RESULT: ----- " + deployDAOMessage + " -----");
+var newDAOBin = daoBin.replace(/__DecentralisedFutureFundDAO\.sol\:Membe__/g, membersLibAddress.substring(2, 42));
+var daoContract = web3.eth.contract(daoAbi);
+var daoTx = null;
+var daoAddress = null;
+var dao = daoContract.new({from: contractOwnerAccount, data: newDAOBin, gas: 6000000, gasPrice: defaultGasPrice},
+  function(e, contract) {
+    if (!e) {
+      if (!contract.address) {
+        daoTx = contract.transactionHash;
+      } else {
+        daoAddress = contract.address;
+        addAccount(daoAddress, "DFF DAO");
+        addDAOContractAddressAndAbi(daoAddress, daoAbi);
+        console.log("DATA: daoAddress=" + daoAddress);
+      }
+    }
+  }
+);
 while (txpool.status.pending > 0) {
 }
 printBalances();
-failIfTxStatusError(setup_1Tx, setup_Message + " - crowdsale.setBTTSToken(tokenAddress)");
-failIfTxStatusError(setup_2Tx, setup_Message + " - token.setMinter(crowdsaleAddress)");
-printTxData("setup_1Tx", setup_1Tx);
-printTxData("setup_2Tx", setup_2Tx);
-printCrowdsaleContractDetails();
+failIfTxStatusError(daoTx, deployDAOMessage);
+printTxData("daoAddress=" + daoAddress, daoTx);
+printDAOContractDetails();
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+var initSetBTTSToken_Message = "Initialisation - Set BTTS Token";
+// -----------------------------------------------------------------------------
+console.log("RESULT: ----- " + initSetBTTSToken_Message + " -----");
+var initSetBTTSToken_1Tx = dao.initSetBTTSToken(tokenAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
+var initSetBTTSToken_2Tx = token.setMinter(daoAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
+var initSetBTTSToken_3Tx = token.transferOwnershipImmediately(daoAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
+while (txpool.status.pending > 0) {
+}
+printBalances();
+failIfTxStatusError(initSetBTTSToken_1Tx, initSetBTTSToken_Message + " - dao.initSetBTTSToken(bttsToken)");
+failIfTxStatusError(initSetBTTSToken_2Tx, initSetBTTSToken_Message + " - token.setMinter(dao)");
+failIfTxStatusError(initSetBTTSToken_3Tx, initSetBTTSToken_Message + " - token.transferOwnershipImmediately(dao)");
+printTxData("initSetBTTSToken_1Tx", initSetBTTSToken_1Tx);
+printTxData("initSetBTTSToken_2Tx", initSetBTTSToken_2Tx);
+printTxData("initSetBTTSToken_3Tx", initSetBTTSToken_3Tx);
+printDAOContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
 
 
 // -----------------------------------------------------------------------------
-var sendContribution0Message = "Send Contribution #0 - Before Crowdsale Start";
+var initAddMembers_Message = "Initialisation - Add Members";
+var name1 = "0x" + web3.padLeft(web3.toHex("two").substring(2), 64);
+var name2 = "0x" + web3.padLeft(web3.toHex("three").substring(2), 64);
+var name3 = "0x" + web3.padLeft(web3.toHex("four").substring(2), 64);
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + sendContribution0Message);
-var sendContribution0_1Tx = eth.sendTransaction({from: contractOwnerAccount, to: crowdsaleAddress, gas: 400000, value: web3.toWei("0.01", "ether")});
-var sendContribution0_2Tx = eth.sendTransaction({from: contractOwnerAccount, to: crowdsaleAddress, gas: 400000, value: web3.toWei("0.02", "ether")});
-var sendContribution0_3Tx = eth.sendTransaction({from: account5, to: crowdsaleAddress, gas: 400000, value: web3.toWei("0.01", "ether")});
+console.log("RESULT: ----- " + initAddMembers_Message + " -----");
+var initAddMembers_1Tx = dao.initAddMember(account2, name1, true, {from: contractOwnerAccount, gas: 300000, gasPrice: defaultGasPrice});
+var initAddMembers_2Tx = dao.initAddMember(account3, name2, true, {from: contractOwnerAccount, gas: 300000, gasPrice: defaultGasPrice});
+var initAddMembers_3Tx = dao.initAddMember(account4, name3, false, {from: contractOwnerAccount, gas: 300000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
-failIfTxStatusError(sendContribution0_1Tx, sendContribution0Message + " - owner 0.01 ETH - Owner Test Transaction");
-passIfTxStatusError(sendContribution0_2Tx, sendContribution0Message + " - owner 0.02 ETH - Expecting failure - not a test transaction");
-passIfTxStatusError(sendContribution0_3Tx, sendContribution0Message + " - ac5 0.01 ETH - Expecting failure");
-printTxData("sendContribution0_1Tx", sendContribution0_1Tx);
-printTxData("sendContribution0_2Tx", sendContribution0_2Tx);
-printTxData("sendContribution0_3Tx", sendContribution0_3Tx);
-printCrowdsaleContractDetails();
+failIfTxStatusError(initAddMembers_1Tx, initAddMembers_Message + " - dao.initAddMember(account2, 'two', true)");
+failIfTxStatusError(initAddMembers_2Tx, initAddMembers_Message + " - dao.initAddMember(account3, 'three', true)");
+failIfTxStatusError(initAddMembers_3Tx, initAddMembers_Message + " - dao.initAddMember(account4, 'four', false)");
+printTxData("initAddMembers_1Tx", initAddMembers_1Tx);
+printTxData("initAddMembers_2Tx", initAddMembers_2Tx);
+printTxData("initAddMembers_3Tx", initAddMembers_3Tx);
+printDAOContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
 
 
-waitUntil("START_DATE", crowdsale.START_DATE(), 0);
-
-
+if (false) {
 // -----------------------------------------------------------------------------
-var sendContribution1Message = "Send Contribution #1";
+var initRemoveMembers_Message = "Initialisation - Remove Members";
 // -----------------------------------------------------------------------------
-console.log("RESULT: " + sendContribution1Message);
-var sendContribution1_1Tx = eth.sendTransaction({from: account5, to: crowdsaleAddress, gas: 400000, value: web3.toWei("10", "ether")});
-var sendContribution1_2Tx = eth.sendTransaction({from: account6, to: crowdsaleAddress, gas: 400000, value: web3.toWei("10", "ether")});
-var sendContribution1_3Tx = eth.sendTransaction({from: account7, to: crowdsaleAddress, gas: 400000, value: web3.toWei("10", "ether")});
-var sendContribution1_4Tx = eth.sendTransaction({from: account8, to: crowdsaleAddress, gas: 400000, value: web3.toWei("10", "ether")});
+console.log("RESULT: ----- " + initRemoveMembers_Message + " -----");
+var initRemoveMembers_1Tx = dao.initRemoveMember(account2, {from: contractOwnerAccount, gas: 200000, gasPrice: defaultGasPrice});
+var initRemoveMembers_2Tx = dao.initRemoveMember(account3, {from: contractOwnerAccount, gas: 200000, gasPrice: defaultGasPrice});
+var initRemoveMembers_3Tx = dao.initRemoveMember(account4, {from: contractOwnerAccount, gas: 200000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
-failIfTxStatusError(sendContribution1_1Tx, sendContribution1Message + " - ac5 10 ETH");
-failIfTxStatusError(sendContribution1_2Tx, sendContribution1Message + " - ac6 10 ETH");
-failIfTxStatusError(sendContribution1_3Tx, sendContribution1Message + " - ac7 10 ETH");
-failIfTxStatusError(sendContribution1_4Tx, sendContribution1Message + " - ac8 10 ETH");
-printTxData("sendContribution1_1Tx", sendContribution1_1Tx);
-printTxData("sendContribution1_2Tx", sendContribution1_2Tx);
-printTxData("sendContribution1_3Tx", sendContribution1_3Tx);
-printTxData("sendContribution1_4Tx", sendContribution1_4Tx);
-printCrowdsaleContractDetails();
+failIfTxStatusError(initRemoveMembers_1Tx, initRemoveMembers_Message + " - dao.initRemoveMember(account2)");
+failIfTxStatusError(initRemoveMembers_2Tx, initRemoveMembers_Message + " - dao.initRemoveMember(account3)");
+failIfTxStatusError(initRemoveMembers_3Tx, initRemoveMembers_Message + " - dao.initRemoveMember(account4)");
+printTxData("initRemoveMembers_1Tx", initRemoveMembers_1Tx);
+printTxData("initRemoveMembers_2Tx", initRemoveMembers_2Tx);
+printTxData("initRemoveMembers_3Tx", initRemoveMembers_3Tx);
+printDAOContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
-
-
-// -----------------------------------------------------------------------------
-var sendContribution2Message = "Send Contribution #2";
-// -----------------------------------------------------------------------------
-console.log("RESULT: " + sendContribution2Message);
-var sendContribution2_1Tx = eth.sendTransaction({from: account5, to: crowdsaleAddress, gas: 400000, value: web3.toWei("20000", "ether")});
-var sendContribution2_2Tx = eth.sendTransaction({from: account6, to: crowdsaleAddress, gas: 400000, value: web3.toWei("20000", "ether")});
-var sendContribution2_3Tx = eth.sendTransaction({from: account7, to: crowdsaleAddress, gas: 400000, value: web3.toWei("20000", "ether")});
-while (txpool.status.pending > 0) {
 }
-var sendContribution2_4Tx = eth.sendTransaction({from: account8, to: crowdsaleAddress, gas: 400000, value: web3.toWei("20000", "ether")});
+
+
+// -----------------------------------------------------------------------------
+var initialisationComplete_Message = "Initialisation - Complete";
+// -----------------------------------------------------------------------------
+console.log("RESULT: ----- " + initialisationComplete_Message + " -----");
+var initialisationComplete_1Tx = dao.initialisationComplete({from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
-failIfTxStatusError(sendContribution2_1Tx, sendContribution2Message + " - ac5 20,000 ETH");
-failIfTxStatusError(sendContribution2_2Tx, sendContribution2Message + " - ac6 20,000 ETH");
-failIfTxStatusError(sendContribution2_3Tx, sendContribution2Message + " - ac7 20,000 ETH");
-failIfTxStatusError(sendContribution2_4Tx, sendContribution2Message + " - ac8 20,000 ETH");
-printTxData("sendContribution2_1Tx", sendContribution2_1Tx);
-printTxData("sendContribution2_2Tx", sendContribution2_2Tx);
-printTxData("sendContribution2_3Tx", sendContribution2_3Tx);
-printTxData("sendContribution2_4Tx", sendContribution2_4Tx);
-printCrowdsaleContractDetails();
-printTokenContractDetails();
-// generateSummaryJSON();
-console.log("RESULT: ");
-
-
-// -----------------------------------------------------------------------------
-var finalise_Message = "Finalise Crowdsale";
-// -----------------------------------------------------------------------------
-console.log("RESULT: " + finalise_Message);
-var finalise_1Tx = crowdsale.finalise({from: contractOwnerAccount, gas: 1000000, gasPrice: defaultGasPrice});
-while (txpool.status.pending > 0) {
-}
-printBalances();
-failIfTxStatusError(finalise_1Tx, finalise_Message);
-printTxData("finalise_1Tx", finalise_1Tx);
-printCrowdsaleContractDetails();
+failIfTxStatusError(initialisationComplete_1Tx, initialisationComplete_Message + " - dao.initialisationComplete()");
+printTxData("initialisationComplete_1Tx", initialisationComplete_1Tx);
+printDAOContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
 
@@ -356,5 +350,3 @@ grep "DATA: " $TEST1OUTPUT | sed "s/DATA: //" > $DEPLOYMENTDATA
 cat $DEPLOYMENTDATA
 grep "RESULT: " $TEST1OUTPUT | sed "s/RESULT: //" > $TEST1RESULTS
 cat $TEST1RESULTS
-# grep "JSONSUMMARY: " $TEST1OUTPUT | sed "s/JSONSUMMARY: //" > $JSONSUMMARY
-# cat $JSONSUMMARY
