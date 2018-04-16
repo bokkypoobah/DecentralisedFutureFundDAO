@@ -174,7 +174,7 @@ console.log("RESULT: ");
 // -----------------------------------------------------------------------------
 var tokenMessage = "Deploy Token Contract";
 var symbol = "DFF";
-var name = "Doofus Dollar";
+var name = "Doofus Dongers";
 var decimals = 18;
 // var initialSupply = "25000000000000000000000000";
 var initialSupply = "0";
@@ -269,15 +269,18 @@ console.log("RESULT: ----- " + initSetBTTSToken_Message + " -----");
 var initSetBTTSToken_1Tx = dao.initSetBTTSToken(tokenAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
 var initSetBTTSToken_2Tx = token.setMinter(daoAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
 var initSetBTTSToken_3Tx = token.transferOwnershipImmediately(daoAddress, {from: contractOwnerAccount, gas: 100000, gasPrice: defaultGasPrice});
+var initSetBTTSToken_4Tx = eth.sendTransaction({from: contractOwnerAccount, to: daoAddress, value: web3.toWei("100", "ether"), gas: 100000, gasPrice: defaultGasPrice});
 while (txpool.status.pending > 0) {
 }
 printBalances();
 failIfTxStatusError(initSetBTTSToken_1Tx, initSetBTTSToken_Message + " - dao.initSetBTTSToken(bttsToken)");
 failIfTxStatusError(initSetBTTSToken_2Tx, initSetBTTSToken_Message + " - token.setMinter(dao)");
 failIfTxStatusError(initSetBTTSToken_3Tx, initSetBTTSToken_Message + " - token.transferOwnershipImmediately(dao)");
+failIfTxStatusError(initSetBTTSToken_4Tx, initSetBTTSToken_Message + " - send 100 ETH to dao");
 printTxData("initSetBTTSToken_1Tx", initSetBTTSToken_1Tx);
 printTxData("initSetBTTSToken_2Tx", initSetBTTSToken_2Tx);
 printTxData("initSetBTTSToken_3Tx", initSetBTTSToken_3Tx);
+printTxData("initSetBTTSToken_4Tx", initSetBTTSToken_4Tx);
 printDAOContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
@@ -343,6 +346,37 @@ printTxData("initialisationComplete_1Tx", initialisationComplete_1Tx);
 printDAOContractDetails();
 printTokenContractDetails();
 console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+var etherPaymentProposal_Message = "Ether Payment Proposal";
+// -----------------------------------------------------------------------------
+console.log("RESULT: ----- " + etherPaymentProposal_Message + " -----");
+var etherPaymentProposal_1Tx = dao.proposeEtherPayment("payment to ac2", account2, new BigNumber("12").shift(18), {from: account2, gas: 300000, gasPrice: defaultGasPrice});
+while (txpool.status.pending > 0) {
+}
+printBalances();
+failIfTxStatusError(etherPaymentProposal_1Tx, etherPaymentProposal_Message + " - dao.proposeEtherPayment(ac2, 12 ETH)");
+printTxData("etherPaymentProposal_1Tx", etherPaymentProposal_1Tx);
+printDAOContractDetails();
+printTokenContractDetails();
+console.log("RESULT: ");
+
+
+// -----------------------------------------------------------------------------
+var vote1_Message = "Vote - Ether Payment Proposal";
+// -----------------------------------------------------------------------------
+console.log("RESULT: ----- " + vote1_Message + " -----");
+var vote1_1Tx = dao.voteYes(0, {from: account3, gas: 300000, gasPrice: defaultGasPrice});
+while (txpool.status.pending > 0) {
+}
+printBalances();
+failIfTxStatusError(vote1_1Tx, vote1_Message + " - ac3 dao.voteYes(proposal 0)");
+printTxData("vote1_1Tx", vote1_1Tx);
+printDAOContractDetails();
+printTokenContractDetails();
+console.log("RESULT: ");
+
 
 
 EOF

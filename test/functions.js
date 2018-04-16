@@ -380,6 +380,15 @@ function printDAOContractDetails() {
       console.log("RESULT: dao.member[" + i + "]=" + member + " [" + data[0] + ", " + data[1] + ", " + 
         web3.toAscii(data[2].replace(/0x.*0/g, "")) + ", " + data[3] + "]");
     }
+
+    console.log("RESULT: dao.numberOfProposals=" + contract.numberOfProposals());
+    for (i = 0; i < contract.numberOfProposals(); i++) {
+      var proposalData1 = contract.getProposalData1(i);
+      var proposalData2 = contract.getProposalData2(i);
+      var proposalData3 = contract.getProposalData3(i);
+      console.log("RESULT: dao.getProposal[" + i + "]=" + JSON.stringify(proposalData1) + " " + JSON.stringify(proposalData2) + " " + JSON.stringify(proposalData3));
+    }
+
     var latestBlock = eth.blockNumber;
 
     var ownershipTransferredEvents = contract.OwnershipTransferred({}, { fromBlock: daoFromBlock, toBlock: latestBlock });
@@ -423,6 +432,34 @@ function printDAOContractDetails() {
       console.log("RESULT: TokensForNewMembersUpdated " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
     });
     tokensForNewMembersUpdatedEvents.stopWatching();
+
+    var etherDepositedEvents = contract.EtherDeposited({}, { fromBlock: daoFromBlock, toBlock: latestBlock });
+    i = 0;
+    etherDepositedEvents.watch(function (error, result) {
+      console.log("RESULT: EtherDeposited " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    etherDepositedEvents.stopWatching();
+
+    var newProposalEvents = contract.NewProposal({}, { fromBlock: daoFromBlock, toBlock: latestBlock });
+    i = 0;
+    newProposalEvents.watch(function (error, result) {
+      console.log("RESULT: NewProposal " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    newProposalEvents.stopWatching();
+
+    var votedEvents = contract.Voted({}, { fromBlock: daoFromBlock, toBlock: latestBlock });
+    i = 0;
+    votedEvents.watch(function (error, result) {
+      console.log("RESULT: Voted " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    votedEvents.stopWatching();
+
+    var etherPaidEvents = contract.EtherPaid({}, { fromBlock: daoFromBlock, toBlock: latestBlock });
+    i = 0;
+    etherPaidEvents.watch(function (error, result) {
+      console.log("RESULT: EtherPaid " + i++ + " #" + result.blockNumber + " " + JSON.stringify(result.args));
+    });
+    etherPaidEvents.stopWatching();
 
     daoFromBlock = latestBlock + 1;
   }

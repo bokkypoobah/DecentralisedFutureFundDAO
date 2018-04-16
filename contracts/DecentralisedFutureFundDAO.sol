@@ -169,7 +169,7 @@ library Members {
         require(!self.initialised);
         self.initialised = true;
     }
-    function exists(Data storage self, address _address) public view returns (bool) {
+    function isMember(Data storage self, address _address) public view returns (bool) {
         return self.entries[_address].exists;
     }
     function isGovernor(Data storage self, address _address) public view returns (bool) {
@@ -233,31 +233,8 @@ contract DFFDAO is Owned {
         uint governorVotedNo;
         uint governorVotedYes;
         address executor;
-        bool closed;
-    }
-
-    Proposal[] proposals;
-    
-    function proposeEtherPayment(string description, address _recipient, uint _amount) public {
-        require(address(this).balance >= _amount);
-        Proposal memory proposal = Proposal({
-            proposalType: ProposalType.EtherPayment,
-            proposer: msg.sender,
-            governor: members.isGovernor(msg.sender),
-            description: description,
-            address1: address(0),
-            address2: address(0),
-            recipient: _recipient,
-            tokenContract: address(0),
-            amount: _amount,
-            memberVotedNo: 0,
-            memberVotedYes: 0,
-            governorVotedNo: 0,
-            governorVotedYes: 0,
-            executor: address(0),
-            closed: false
-        });
-        proposals.push(proposal);
+        bool open;
+        // TODO opentime, closedtime
     }
 
     uint8 public constant TOKEN_DECIMALS = 18;
@@ -266,6 +243,7 @@ contract DFFDAO is Owned {
     BTTSTokenInterface public bttsToken;
     Members.Data members;
     bool public initialised;
+    Proposal[] proposals;
 
     uint public tokensForNewGoverningMembers = 200000 * TOKEN_DECIMALSFACTOR; 
     uint public tokensForNewMembers = 1000 * TOKEN_DECIMALSFACTOR; 
@@ -277,7 +255,10 @@ contract DFFDAO is Owned {
     event BTTSTokenUpdated(address indexed oldBTTSToken, address indexed newBTTSToken);
     event TokensForNewGoverningMembersUpdated(uint oldTokens, uint newTokens);
     event TokensForNewMembersUpdated(uint oldTokens, uint newTokens);
-
+    event EtherDeposited(address indexed sender, uint amount);
+    event NewProposal(uint indexed proposalId, ProposalType indexed proposalType, address indexed proposer, address recipient, address tokenContract, uint amount); 
+    event Voted(uint indexed proposalId, address indexed voter, bool governor, bool vote, uint governorVotedYes, uint governorVotedNo, uint memberVotedYes, uint memberVotedNo);
+    event EtherPaid(uint indexed proposalId, address indexed sender, address indexed recipient, uint amount);
 
     function Governance() public {
         members.init();
@@ -303,6 +284,66 @@ contract DFFDAO is Owned {
         require(members.length() != 0);
         initialised = true;
         transferOwnershipImmediately(address(0));
+    }
+
+    function proposeEtherPayment(string description, address _recipient, uint _amount) public {
+        require(address(this).balance >= _amount);
+        require(members.isMember(msg.sender));
+        Proposal memory proposal = Proposal({
+            proposalType: ProposalType.EtherPayment,
+            proposer: msg.sender,
+            governor: members.isGovernor(msg.sender),
+            description: description,
+            address1: address(0),
+            address2: address(0),
+            recipient: _recipient,
+            tokenContract: address(0),
+            amount: _amount,
+            memberVotedNo: 0,
+            memberVotedYes: 0,
+            governorVotedNo: 0,
+            governorVotedYes: 0,
+            executor: address(0),
+            open: true
+        });
+        proposals.push(proposal);
+        emit NewProposal(proposals.length - 1, ProposalType.EtherPayment, msg.sender, _recipient, address(0), _amount); 
+    }
+    function voteNo(uint proposalId) public {
+        vote(proposalId, false);
+    }
+    function voteYes(uint proposalId) public {
+        vote(proposalId, true);
+    }
+    function vote(uint proposalId, bool yesNo) public {
+        Proposal storage proposal = proposals[proposalId];
+        require(proposal.open);
+        if (!proposal.voted[msg.sender]) {
+            if (members.isGovernor(msg.sender)) {
+                if (yesNo) {
+                    proposal.governorVotedYes++;
+                } else {
+                    proposal.governorVotedNo++;
+                }
+                emit Voted(proposalId, msg.sender, false, yesNo, proposal.governorVotedYes, proposal.governorVotedNo, proposal.memberVotedYes, proposal.memberVotedNo);
+            } else {
+                if (yesNo) {
+                    proposal.memberVotedYes++;
+                } else {
+                    proposal.memberVotedNo++;
+                }
+                emit Voted(proposalId, msg.sender, true, yesNo, proposal.governorVotedYes, proposal.governorVotedNo, proposal.memberVotedYes, proposal.memberVotedNo);
+            }
+            proposal.voted[msg.sender];
+        }
+        if (proposal.governorVotedYes > 0 && members.isGovernor(msg.sender) && proposal.open) {
+            if (proposal.proposalType == ProposalType.EtherPayment) {
+                proposal.recipient.transfer(proposal.amount);
+                emit EtherPaid(proposalId, msg.sender, proposal.recipient, proposal.amount);
+                proposal.executor = msg.sender;
+                proposal.open = false;
+            }
+        }
     }
 
     function setBTTSToken(address _bttsToken) internal {
@@ -337,5 +378,36 @@ contract DFFDAO is Owned {
     }
     function getMemberByIndex(uint _index) public view returns (address _member) {
         return members.index[_index];
+    }
+
+    function numberOfProposals() public view returns (uint) {
+        return proposals.length;
+    }
+    function getProposalData1(uint proposalId) public view returns (uint _proposalType, address _proposer, bool governor, string _description) {
+        Proposal memory proposal = proposals[proposalId];
+        _proposalType = uint(proposal.proposalType);
+        _proposer = proposal.proposer;
+        _description = proposal.description;
+    }
+    function getProposalData2(uint proposalId) public view returns (address _address1, address _address2, address _recipient, address _tokenContract, uint _amount) {
+        Proposal memory proposal = proposals[proposalId];
+        _address1 = proposal.address1;
+        _address2 = proposal.address2;
+        _recipient = proposal.recipient;
+        _tokenContract = proposal.tokenContract;
+        _amount = proposal.amount;
+    }
+    function getProposalData3(uint proposalId) public view returns (uint _memberVotedNo, uint _memberVotedYes, uint _governorVotedNo, uint _governorVotedYes, address _executor, bool _open) {
+        Proposal memory proposal = proposals[proposalId];
+        _memberVotedNo = proposal.memberVotedNo;
+        _memberVotedYes = proposal.memberVotedYes;
+        _governorVotedNo = proposal.governorVotedNo;
+        _governorVotedYes = proposal.governorVotedYes;
+        _executor = proposal.executor;
+        _open = proposal.open;
+    }
+
+    function () public payable {
+        emit EtherDeposited(msg.sender, msg.value);
     }
 }
